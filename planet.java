@@ -19,11 +19,11 @@ public class planet {
         StdDraw.enableDoubleBuffering();
         //StdDraw.circle(0.5, 0.5, 0.01);
 
-        double[] planetVelocityA = {0, 0.1};
+        double[] planetVelocityA = {0, 0.01};
         double[] planetPositionA = {0.5, 0.5};
         planet myPlanets = new planet(planetPositionA, planetVelocityA, 1);
 
-        double[] planetVelocityB = {0, -0.1};
+        double[] planetVelocityB = {0, -0.01};
         double[] planetPositionB = {0.6, 0.5};
         myPlanets.addPlanet(planetPositionB, planetVelocityB, 1);
 
@@ -31,7 +31,7 @@ public class planet {
             StdDraw.clear();
             myPlanets.reDraw();
             StdDraw.show();
-            StdDraw.pause(1000);
+            StdDraw.pause(100);
         }
         
     }
@@ -48,6 +48,25 @@ public class planet {
     }
 
     private void recalculate(){
+        position[0] += velocity[0];
+        position[1] += velocity[1];
+    }
+
+    private forceStructure calcForces(forceStructure input){
+        forceStructure currentForce = input;
+        for (int i = 0; i < planetId; i++) {
+            if (currentForce.nextRow == null) {
+                
+            }
+            currentForce = currentForce.nextRow;
+        }
+        while (condition) {
+            
+        }
+        return input;
+    }
+
+    private double[] effectiveForce(forceStructure input){
 
     }
 

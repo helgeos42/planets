@@ -16,18 +16,38 @@ public class planet {
     public static void main(String[] args) {
         StdDraw.setTitle("planets");
         StdDraw.setCanvasSize(700, 700);
+        StdDraw.enableDoubleBuffering();
+        //StdDraw.circle(0.5, 0.5, 0.01);
 
-        double[] planetVelocity = {0, 0.1};
-        double[] planetPosition = {0.5, 0.5};
-        planet myPlanets = new planet(planetVelocity, planetPosition, 1);
+        double[] planetVelocityA = {0, 0.1};
+        double[] planetPositionA = {0.5, 0.5};
+        planet myPlanets = new planet(planetPositionA, planetVelocityA, 1);
 
-        planetVelocity[1] = -0.1;
-        myPlanets.addPlanet(planetPosition, planetVelocity, 1);
+        double[] planetVelocityB = {0, -0.1};
+        double[] planetPositionB = {0.6, 0.5};
+        myPlanets.addPlanet(planetPositionB, planetVelocityB, 1);
 
-        myPlanets.draw();
+        while (true) {
+            StdDraw.clear();
+            myPlanets.reDraw();
+            StdDraw.show();
+            StdDraw.pause(1000);
+        }
+        
     }
 
-    public void draw(){
+    public void reDraw(){
+
+        StdDraw.circle(position[0], position[1], mass * 0.01);
+
+        recalculate();
+
+        if (next != null) {
+            next.reDraw();
+        }
+    }
+
+    private void recalculate(){
 
     }
 

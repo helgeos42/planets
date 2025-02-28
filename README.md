@@ -32,7 +32,11 @@ erfolgen.
 ### Physikalische und Geometrische Berechnung
 Physikalische Grundlage der Simulation ist das
 Gravitationsgesetz:
-$$ F = G * \frac{m_1 * m_2}{r^2} $$
+
+```math
+F = G * \frac{m_1 * m_2}{r^2}
+```
+
 Dabei ist $G = $
 
 ## Dokumentation der einzelnen Arbeitsschritte

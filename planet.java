@@ -7,34 +7,25 @@ public class planet {
     public int planetId = 0;
     public planet next = null;
 
+    private forceStructure myGravity = null;
+
+
     public planet(double[] inputPosition, double[] inputVelocity, int inputMass){
         position = inputPosition;
         velocity = inputVelocity;
         mass = inputMass;
+
+        myGravity = new forceStructure();
     }
 
-    public static void main(String[] args) {
-        StdDraw.setTitle("planets");
-        StdDraw.setCanvasSize(700, 700);
-        StdDraw.enableDoubleBuffering();
-        //StdDraw.circle(0.5, 0.5, 0.01);
+    public planet(double[] inputPosition, double[] inputVelocity, int inputMass, forceStructure inputGravity){
+        position = inputPosition;
+        velocity = inputVelocity;
+        mass = inputMass;
 
-        double[] planetVelocityA = {0, 0.01};
-        double[] planetPositionA = {0.5, 0.5};
-        planet myPlanets = new planet(planetPositionA, planetVelocityA, 1);
-
-        double[] planetVelocityB = {0, -0.01};
-        double[] planetPositionB = {0.6, 0.5};
-        myPlanets.addPlanet(planetPositionB, planetVelocityB, 1);
-
-        while (true) {
-            StdDraw.clear();
-            myPlanets.reDraw();
-            StdDraw.show();
-            StdDraw.pause(100);
-        }
-        
+        myGravity = inputGravity;
     }
+
 
     public void reDraw(){
 
@@ -46,24 +37,29 @@ public class planet {
             next.reDraw();
         }
     }
-
+    
     private void recalculate(){
+
+        calcForces();
+
         position[0] += velocity[0];
         position[1] += velocity[1];
     }
 
-    private forceStructure calcForces(forceStructure input){
-        forceStructure currentForce = input;
+    private void calcForces(){
+
+        forceStructure currentForce = myGravity;
+
         for (int i = 0; i < planetId; i++) {
             if (currentForce.nextRow == null) {
-                
+                currentForce.nextRow = new forceStructure();
             }
             currentForce = currentForce.nextRow;
         }
-        while (condition) {
+        planet calcToPlanet = next;
+        while (calcToPlanet != null) {
             
         }
-        return input;
     }
 
     private double[] effectiveForce(forceStructure input){
@@ -72,7 +68,7 @@ public class planet {
 
     public void addPlanet(double[] inputPosition, double[] inputVelocity, int inputMass){
         planet addAfter = lastPlanet();
-        addAfter.next = new planet(inputPosition, inputVelocity, inputMass);
+        addAfter.next = new planet(inputPosition, inputVelocity, inputMass, myGravity);
         lastPlanet().planetId = addAfter.planetId + 1;
     }
 

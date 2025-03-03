@@ -53,8 +53,19 @@ als Vektor benötigt. $\overrightarrow{F}$ ist der Vektor mit dem
 Betrag $F$, der vom ersten der Planeten ($p_1$)
 in Richtung des zweiten ($p_2$) zeigt.
 Um $\overrightarrow{F}$ zu bestimmen, wird erst der Verbindungsvektor
-$\overrightarrow{p_1p_2}$ berechnet. Mit einem Skalar s multipliz
-Also muss gelten: $|s \cdot \overrightarrow{p_1p_2}| = F$
+$\overrightarrow{p_1p_2}$ berechnet. Mit einem Skalar $s$ multipliziert
+ist dieser $\overrightarrow{F}$.
+Für $s$ muss gelten: 
+
+```math
+\begin{aligned}
+
+s \cdot |\overrightarrow{p_1p_2}| = F \\
+s \cdot \sqrt{(x_{p1p2})^2 + (y_{p1p2})^2} = F \\
+s = \frac{F}{\sqrt{(x_{p1p2})^2 + (y_{p1p2})^2}}
+
+\end{aligned}
+```
 
 Um aus einem Zustand der Simulation den nächsten zu berechnen,
 muss für alle Kombinationen von

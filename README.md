@@ -1,9 +1,10 @@
 # planets
 
+Programmierprojekt Informatik Q2
+
 - [planets](#planets)
     - [Projektbeschreibung](#projektbeschreibung)
     - [Geplante Vorgehensweise](#geplante-vorgehensweise)
-        - [Darstellung mit StdDraw](#darstellung-mit-stddraw)
         - [Planeten als Objekte](#planeten-als-objekte)
         - [Physikalische und Geometrische Berechnung](#physikalische-und-geometrische-berechnung)
     - [Dokumentation der einzelnen Arbeitsschritte](#dokumentation-der-einzelnen-arbeitsschritte)
@@ -25,9 +26,22 @@ erfolgen.
 
 ## Geplante Vorgehensweise
 
-### Darstellung mit [StdDraw](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html)
-
 ### Planeten als Objekte
+Ein Planet soll in planets als Objekt der Klasse `planet` angelegt werden.
+Die wichtigsten Attribute der Klasse sind
+`position`, `velocity` und `mass` als grundlegende physikalische
+Größen der Simulation.
+Die Klasse planet benötigt u.a. Methoden um den Planeten zu zeichnen, um
+die insgesamt auf ihn wirkende Gravitationskraft zu berechnen sowie
+um daraus Beschleunigung, Geschwindigkeit und letztlich Position zu berechnen.
+
+Des weiteren verfügt die Klasse `planet` über ein Attribut `next`, das
+auf den nächsten Planeten verweist. So entsteht ein komplexer Datentyp,
+in dem jedes Objekt vom Typ `planet` auf die nachfolgenden Planeten zugreifen
+kann.
+Vorteil dieser Herangehensweise ist, dass während die Simulation läuft Planeten
+hinzugefügt oder gelöscht werden können und keine Maximalanzahl von
+Planeten festgelegt werden muss.
 
 ### Physikalische und Geometrische Berechnung
 
@@ -74,7 +88,7 @@ Dann kann für jeden Planeten
 durch vektorielles Addieren der einzelnen Kräfte eine Gesamtkraft
 auf ihn bestimmt werden.
 
-Mit dem zweiten Newtonschem Gesetz $ \overrightarrow{F} = m \cdot \overrightarrow{a} $ kann dann die
+Mit dem zweiten Newtonschem Gesetz $\overrightarrow{F} = m \cdot \overrightarrow{a}$ kann dann die
 die Beschleunigung des Planeten bestimmt werden.
 Diese wird auf seine Geschwindigkeit addiert (eine neue Berechnung
 der Simulation entspricht einer Zeiteinheit). Dann wird die
@@ -82,10 +96,53 @@ Geschwindigkeit auf die Position addiert, jetzt kann der Planet an
 seiner neuen Position gezeichnet werden.
 
 ## Dokumentation der einzelnen Arbeitsschritte
+Zuerst habe ich mich mit der Benutzung vom
+[StdDraw](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html)
+beschäftigt und eine mitgelieferte Beispielzeichnung getestet.
+Dann habe ich mit der Implementierung der Klasse `planet` begonnen.
 
 
 ## Reflexion des Programmierprozesses
+Einige Schritte des Projektes wie zum Beispiel die
+Berechnungen mit Vektoren oder die Datenstruktur für
+die Gravitationskräfte zwischen den Planeten könnten
+mit Verwendung fertiger Java-Funktionen und Bibliotheken
+einfacher und eleganter gelöst werden.
+Allerdings ist es Teil des Projekts, für diese Probleme
+eine eigene Lösung zu finden.
+Sehr hilfreich ist dagegen die vorgegebene Klasse 
+[StdDraw](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html),
+die die Darstellung der Simulation deutlich vereinfacht.
+
+Um die Bedienung der Simulation zu vereinfachen wäre als nächster
+Schritt die Implementierung eines Kommandozeileninterface
+nötig. Damit könnten über einfache Befehle während der Simulation
+Planeten hinzugefügt und gelöscht werden und möglicherweise bestimmte
+Größen wie die Kraft auf einen bestimmten Planeten ausgegeben werden.
+Um sich mit einem Befehl auf einen Planeten beziehen zu können,
+müsste die `planetId` neben die Planeten gezeichnet werden.
+
+Auch andere grafische Darstellungsmöglichkeiten
+für die Simulation wären interessant.
+Beispielsweise könnten auch die Bahnen der Planeten oder Kraftvektoren
+angezeigt werden.
+
+Während des Programmierprojekts habe ich nicht nur einiges
+über die Programmierung in Java gelernt, sondern mich
+auch erstmals mit git und GitHub beschäftigt.
+Das hat es deutlich einfacher gemacht, sowohl in der
+Schule als auch Zuhause am Projekt zu arbeiten.
 
 
 ## Fazit
+Die Simulation der Gravitation mit planets funktioniert gut.
+Es ist sehr spannend, zu beobachten, wie die Planeten sich
+gegenseitig beeinflussen und sich ihre Bewegung verändert
+(etwa im Beispiel, das von der `mainClass` standardmäßig
+dargestellt wird).
+Allerdings braucht es etwas Experimentierfreude um eine Kombination an
+Ausgangsbedingungen zu finden, in der die die Planeten nicht
+sofort auseinanderfliegen.
+
+
 

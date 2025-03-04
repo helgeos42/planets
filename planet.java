@@ -2,6 +2,8 @@ public class planet {
 
     private final double gravityConstant = 6.6743e-11;
 
+    private final double planetRadiusMultiplier = 0.01;
+
     private double[] position = {0, 0};
     private double[] velocity = {0, 0};
     private double mass = 0;
@@ -39,28 +41,30 @@ public class planet {
 
     public void reDraw(){
 
-        StdDraw.circle(position[0], position[1], mass * 0.01);
+        StdDraw.circle(position[0], position[1], mass * planetRadiusMultiplier);
 
-        recalculate();
+        calcNewPosition();
 
         if (next != null) {
             next.reDraw();
         }
     }
     
-    private void recalculate(){
+    private void calcNewPosition(){
 
-        calcForces();
+        double[] myForce = calcForce();
 
         position[0] += velocity[0];
         position[1] += velocity[1];
     }
 
-    private void calcForces(){
+    private double[] calcForce(){
+
+        double[] totalForce = addUpExistingForces();
 
         forceStructure currentForce = myGravity;
 
-        for (int i = 0; i < planetId; i++) {
+        for (int currentRow = 0; currentRow < planetId; currentRow++) {
             if (currentForce.nextRow == null) {
                 currentForce.nextRow = new forceStructure();
             }
@@ -71,6 +75,8 @@ public class planet {
         while (calcToPlanet != null) {
 
             currentForce.value = gravityBetweenPlanets(this, calcToPlanet);
+            totalForce[0] += currentForce.value[0];
+            totalForce[1] += currentForce.value[1];
 
             calcToPlanet = calcToPlanet.next;
 
@@ -80,6 +86,7 @@ public class planet {
 
             currentForce = currentForce.nextCol;
         }
+        return totalForce;
     }
 
     private double[] gravityBetweenPlanets(planet planetA, planet planetB){
@@ -98,8 +105,8 @@ public class planet {
         return gravityVector;
     }
 
-    private double[] effectiveForce(){
-        
+    private double[] addUpExistingForces(){
+
         double[] totalForce = {0, 0};
 
         for(int currentRow = 0; currentRow < planetId; currentRow++){
@@ -109,7 +116,8 @@ public class planet {
                 currentForce = currentForce.nextRow;
             }
 
-            for(int currentCol = 1; currentCol < (planetId - currentRow); currentCol++){
+            int myForceCol = planetId - currentRow;
+            for(int currentCol = 1; currentCol < myForceCol; currentCol++){
                 currentForce = currentForce.nextCol;
             }
 
@@ -117,21 +125,19 @@ public class planet {
             totalForce[1] += currentForce.value[1];
         }
 
-        forceStructure currentForce = myGravity;
-        for(int currentRow = 0; currentRow < planetId; currentRow++){
-            currentForce = currentForce.nextRow;
-        }
-
-        while(currentForce != null){
-            totalForce[0] += currentForce.value[0];
-            totalForce[1] += currentForce.value[1];
-
-            currentForce = currentForce.nextCol;
-        }
-
         return totalForce;
     }
 
+   
+    private double[] acceleration(double[] force){
+        double accelerationX = force[0] / mass;
+        double accelerationY = force[1] / mass;
+        
+        double[] acc = {accelerationX, accelerationY};
+        return acc;
+    }
+
+    
     public void addPlanet(double[] inputPosition, double[] inputVelocity, int inputMass){
         planet addAfter = lastPlanet();
         addAfter.next = new planet(inputPosition, inputVelocity, inputMass, myGravity);

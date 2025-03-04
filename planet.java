@@ -2,7 +2,8 @@ public class planet {
 
     private final double gravityConstant = 6.6743e-11;
 
-    private final double planetRadiusMultiplier = 0.01;
+    private final double planetRadiusMultiplier = 10e-8;
+    private final int pauseMilliseconds = 500;
 
     private double[] position = {0, 0};
     private double[] velocity = {0, 0};
@@ -14,7 +15,7 @@ public class planet {
     private forceStructure myGravity = null;
 
 
-    public planet(double[] inputPosition, double[] inputVelocity, int inputMass){
+    public planet(double[] inputPosition, double[] inputVelocity, double inputMass){
         position = inputPosition;
         velocity = inputVelocity;
         mass = inputMass;
@@ -22,7 +23,7 @@ public class planet {
         myGravity = new forceStructure();
     }
 
-    public planet(double[] inputPosition, double[] inputVelocity, int inputMass, forceStructure inputGravity){
+    public planet(double[] inputPosition, double[] inputVelocity, double inputMass, forceStructure inputGravity){
         position = inputPosition;
         velocity = inputVelocity;
         mass = inputMass;
@@ -38,24 +39,38 @@ public class planet {
         return position;
     }
 
+    public void simulate(){
+        StdDraw.clear();
+        draw();
+        StdDraw.show();
+        StdDraw.pause(pauseMilliseconds);
 
-    public void reDraw(){
+        calcNewPosition();
+    }
+
+    public void draw(){
 
         StdDraw.circle(position[0], position[1], mass * planetRadiusMultiplier);
 
-        calcNewPosition();
-
         if (next != null) {
-            next.reDraw();
+            next.draw();
         }
     }
     
     private void calcNewPosition(){
 
         double[] myForce = calcForce();
+        double[] acceleration = calcAcceleration(myForce);
+
+        velocity[0] += acceleration[0];
+        velocity[1] += acceleration[1];
 
         position[0] += velocity[0];
         position[1] += velocity[1];
+
+        if (next != null) {
+            next.calcNewPosition();
+        }
     }
 
     private double[] calcForce(){
@@ -129,7 +144,7 @@ public class planet {
     }
 
    
-    private double[] acceleration(double[] force){
+    private double[] calcAcceleration(double[] force){
         double accelerationX = force[0] / mass;
         double accelerationY = force[1] / mass;
         
@@ -138,7 +153,7 @@ public class planet {
     }
 
     
-    public void addPlanet(double[] inputPosition, double[] inputVelocity, int inputMass){
+    public void addPlanet(double[] inputPosition, double[] inputVelocity, double inputMass){
         planet addAfter = lastPlanet();
         addAfter.next = new planet(inputPosition, inputVelocity, inputMass, myGravity);
         lastPlanet().planetId = addAfter.planetId + 1;

@@ -2,8 +2,8 @@ public class planet {
 
     private final double gravityConstant = 6.6743e-11;
 
-    private final double planetRadiusMultiplier = 10e-8;
-    private final int pauseMilliseconds = 500;
+    private final double planetRadiusMultiplier = 1e-7;
+    private final int pauseMilliseconds = 200;
 
     private double[] position = {0, 0};
     private double[] velocity = {0, 0};
@@ -112,6 +112,10 @@ public class planet {
         double massA = planetA.getMass();
         double massB = planetB.getMass();
 
+        if (distance == 0) {
+            distance = 1;
+        }
+
         double gravityValue = gravityConstant * massA * massB / Math.pow(distance, 2);
 
         double scalar = gravityValue / distance;
@@ -136,8 +140,8 @@ public class planet {
                 currentForce = currentForce.nextCol;
             }
 
-            totalForce[0] += currentForce.value[0];
-            totalForce[1] += currentForce.value[1];
+            totalForce[0] += (-1 * currentForce.value[0]);
+            totalForce[1] += (-1 * currentForce.value[1]);
         }
 
         return totalForce;

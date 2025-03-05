@@ -167,6 +167,8 @@ alle Kräfte eines Planeten zu den Planeten, auf
 die er mit `next` zugreifen kann (Planeten nach ihm)
 gespeichert.
 
+![forceStructure Diagramm](./images/forceStructure.drawio.svg)
+
 ## Reflexion des Programmierprozesses
 Einige Schritte des Projektes wie zum Beispiel die
 Berechnungen mit Vektoren oder die Datenstruktur für

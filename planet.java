@@ -3,7 +3,8 @@ public class planet {
     private final double gravityConstant = 6.6743e-11;
 
     private final double planetRadiusMultiplier = 1e-7;
-    private final int pauseMilliseconds = 200;
+    private final int pauseMilliseconds = 20;
+    private final double simulationTimeMultiplier = 0.1;
 
     private double[] position = {0, 0};
     private double[] velocity = {0, 0};
@@ -62,11 +63,11 @@ public class planet {
         double[] myForce = calcForce();
         double[] acceleration = calcAcceleration(myForce);
 
-        velocity[0] += acceleration[0];
-        velocity[1] += acceleration[1];
+        velocity[0] += acceleration[0] * simulationTimeMultiplier;
+        velocity[1] += acceleration[1] * simulationTimeMultiplier;
 
-        position[0] += velocity[0];
-        position[1] += velocity[1];
+        position[0] += velocity[0] * simulationTimeMultiplier;
+        position[1] += velocity[1] * simulationTimeMultiplier;
 
         if (next != null) {
             next.calcNewPosition();

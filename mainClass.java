@@ -4,7 +4,6 @@ public class mainClass {
         StdDraw.setTitle("planets");
         StdDraw.setCanvasSize(700, 700);
         StdDraw.enableDoubleBuffering();
-        //StdDraw.circle(0.5, 0.5, 0.01);
 
         double[] planetVelocityA = {0, 0.0021};
         double[] planetPositionA = {0.45, 0.5};

@@ -88,7 +88,11 @@ Dann kann für jeden Planeten
 durch vektorielles Addieren der einzelnen Kräfte eine Gesamtkraft
 auf ihn bestimmt werden.
 
-Mit dem zweiten Newtonschem Gesetz $\overrightarrow{F} = m \cdot \overrightarrow{a}$ kann dann die
+Mit dem zweiten Newtonschem Gesetz
+```math
+\overrightarrow{F} = m \cdot \overrightarrow{a}
+```
+kann dann die
 die Beschleunigung des Planeten bestimmt werden.
 Diese wird auf seine Geschwindigkeit addiert (eine neue Berechnung
 der Simulation entspricht einer Zeiteinheit). Dann wird die

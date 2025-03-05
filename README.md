@@ -94,9 +94,10 @@ Mit dem zweiten Newtonschem Gesetz
 ```
 kann dann die
 die Beschleunigung des Planeten bestimmt werden.
-Diese wird auf seine Geschwindigkeit addiert (eine neue Berechnung
-der Simulation entspricht einer Zeiteinheit). Dann wird die
-Geschwindigkeit auf die Position addiert, jetzt kann der Planet an
+Diese wird mit `simulationTimeMultiplier` multipliziert und
+auf seine Geschwindigkeit addiert. Dann wird auch die
+Geschwindigkeit mit `simulationTimeMultiplier` multipliziert
+und auf die Position addiert. Jetzt kann der Planet an
 seiner neuen Position gezeichnet werden.
 
 ## Dokumentation der einzelnen Arbeitsschritte
@@ -105,6 +106,32 @@ Zuerst habe ich mich mit der Benutzung vom
 beschäftigt und eine mitgelieferte Beispielzeichnung getestet.
 Dann habe ich mit der Implementierung der Klasse `planet` begonnen.
 
+```
+public void reDraw(){
+    StdDraw.circle(position[0], position[1], mass * 0.01);
+    recalculate();
+
+    if (next != null) {
+        next.reDraw();
+    }
+}
+private void recalculate(){
+    position[0] += velocity[0];
+    position[1] += velocity[1];
+    }
+```
+Zuerst wurde dafür die grundlegende Funktion der
+Methoden `reDraw()` und `recalculate()` sowie
+die Methode `addPlanet()` implementiert.
+Die Methode `reDraw()` wird rekursiv für alle Planeten aufgerufen.
+So können bereits mehrere Planeten angelegt und
+ihre Bewegungen gezeichnet werden, allerdings
+noch ohne gegenseitige Beeinflussung durch Gravitation.
+Das heißt, mit dieser Implementierung fliegen die Planeten
+noch geradeaus aus dem Bild heraus.
+
+Im nächsten Schritt musste also die Berechnung der Gravitationskräfte
+zwischen den Planeten implementiert werden.
 
 ## Reflexion des Programmierprozesses
 Einige Schritte des Projektes wie zum Beispiel die

@@ -14,6 +14,7 @@ public class planet {
     public planet next = null;
 
     private forceStructure myGravity = null;
+    //Erlaeuterung zur Datenstruktur siehe Dokumentation
 
 
     public planet(double[] inputPosition, double[] inputVelocity, double inputMass){

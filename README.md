@@ -156,18 +156,45 @@ angewendet werden.
 Diese Vorgehen hätte aber der Nachteil, dass jede einzelne Gravitationskraft
 doppelt berechnet werden würde
 (als $\overrightarrow{F_{p1p2}}$ und $\overrightarrow{F_{p2p1}}$).
-Um das zu umgehen, werden die bereits berechneten Kraftvektoren
+Um das zu umgehen, werden stattdessen die bereits berechneten Kraftvektoren
 in einer eigenen Datenstruktur gespeichert.
 Diese Struktur besteht aus Objekten der Klasse `forceStructure`.
 Eines dieser Objekte hat drei Attribute: `value` speichert
-einen Kraftvektor und `nextCol` bzw. `nextRow` verweisen auf
-das nächste Objekt in der aktuellen Zeile bzw.
-das erste Objekt der nächsten Zeile. In einer Zeile sind
+einen Kraftvektor, `nextCol` verweist auf
+das nächste Objekt in der aktuellen Zeile und
+`nextRow` auf
+das erste Objekt der nächsten Zeile.
+In einer Zeile sind
 alle Kräfte eines Planeten zu den Planeten, auf
 die er mit `next` zugreifen kann (Planeten nach ihm)
-gespeichert.
+gespeichert:
 
 ![forceStructure Diagramm](./images/forceStructure.drawio.svg)
+
+Um die Gesamtkraft auf einen Planeten zu berechnen,
+muss die Methode `calcForce()` ausgeführt werden.
+Darin wird zuerst die Methode `addUpExistingForces()` aufgerufen.
+Diese Methode sucht in jeder bereits gefüllten Zeile
+der Datenstruktur das Objekt heraus, das die Kraft zum
+aktuellen Planeten enthält. 
+Der Kraftvektor dieser Objekte
+muss umgekehrt werden ($-1 \cdot \overrightarrow{F_{AB}} = \overrightarrow{F_{BA}}$),
+ansonsten wird einer der Planeten abgestoßen statt angezogen.
+Dann werden diese Kraftvektoren aufaddiert und durch
+die Methode zurückgegeben.
+
+Hat der aktuelle Planet beispielsweise die `planetId` `2`,
+verwendet `addUpExistingForces()` die Werte
+von $F_{02}$ und $F_{12}$ (siehe Abbildung).
+
+Daraufhin werden in der Methode `calcForce()` die Kräfte
+vom aktuellen Planeten zu den Planeten nach ihm berechnet.
+Diese Kräfte werden in der aktuellen Zeile der Datenstruktur
+abgespeichert und mit dem Rückgabewert von `addUpExistingForces()`
+zur Gesamtkraft auf den aktuellen Planeten aufaddiert.
+Diese Gesamtkraft wird von `calcNewPosition()` verwendet um die nächste
+Postion des Planeten zu berechnen, an der der Planet durch `draw()`
+im nächsten Zustand der Simulation gezeichnet wird.
 
 ## Reflexion des Programmierprozesses
 Einige Schritte des Projektes wie zum Beispiel die

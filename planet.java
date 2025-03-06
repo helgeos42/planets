@@ -133,7 +133,8 @@ public class planet {
         for(int currentRow = 0; currentRow < planetId; currentRow++){
 
             forceStructure currentForce = myGravity;
-            for (int i = 0; i < currentRow; i++) {
+            //erstes Element der aktuellen Zeile (currentRow) heraussuchen:
+            for (int i = 0; i < currentRow; i++) { 
                 currentForce = currentForce.nextRow;
             }
 
